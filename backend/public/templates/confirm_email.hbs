@@ -1,0 +1,46 @@
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Email confirmation</title>
+    <style>
+      @import
+      url("https://fonts.googleapis.com/css2?family=Fugaz+One&display=swap");
+      .code { font-weight: bold; font-family: system-ui; font-size: 30px;
+      text-align: center; }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <h1
+        class="brand"
+        style="
+          font-family: bold;
+          font-size: 40px;
+          color: #4360ff;
+          text-align: left;
+          font-family: Fugaz One;
+        "
+      >
+        PAARK
+      </h1>
+    </nav>
+    <div class="content">
+      Bonjour
+      {{username}}
+      ,
+      <br />
+      <br />
+      <div>
+        Vous avez récemment crée un compte sur Wish avec
+        {{email}}
+        . pour terminer votre inscription, entrez le code ci-dessous.
+      </div>
+      <br />
+      <div class="code">{{confirmationCode}}</div>
+      <br />
+      <div>Wish</div>
+    </div>
+  </body>
+</html>

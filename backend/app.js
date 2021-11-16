@@ -1,0 +1,39 @@
+require("dotenv").config();
+const express = require("express");
+const app = express();
+const cors = require("cors");
+const exphbs = require("express-handlebars");
+const port = process.env.PORT || 5000;
+const path = require("path");
+const mongoose = require("mongoose");
+
+const hbs = exphbs.create({
+  defaultLayout: "main",
+  partialsDir: ["views/partials/"],
+});
+app.engine("handlebars", hbs.engine);
+app.set("view engine", "handlebars");
+app.set("public", path.join(__dirname, "./public/templates"));
+
+// db config
+const url = process.env.ATLAS_URL;
+mongoose.connect(url, { useNewUrlParser: true });
+const db = mongoose.connection;
+
+db.once("open", (_) => {
+  console.log("Database connected:", url);
+});
+db.on("error", (err) => {
+  console.error("connection error:", err);
+});
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(cors());
+app.use(express.static("public"));
+
+const usersRouter = require("./routes/users");
+
+app.use("/users", usersRouter);
+
+app.listen(port, () => console.log(`Wish listening on port ${port}`));
