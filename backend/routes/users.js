@@ -1,11 +1,8 @@
 const router = require("express").Router();
 const sendConfirmEMailCode = require("../services/email");
+const randomNumber = require("../utils/randomDigitNumber.js");
 let User = require("../models/user");
 const authorizedEmails = process.env.MEMBERS_EMAILS_ADDRESSES.split(",");
-
-router.use((req, res, next) => {
-  next();
-});
 
 router.get("/delete", (req, res, next) => {
   User.findOneAndDelete({ email: "s-attilah@hotmail.com" }, (err, docs) => {
@@ -26,10 +23,20 @@ router.post("/signup/email", async (req, res) => {
     const user = await User.findOne({ email });
     if (user) {
       if (user.status === "pending") {
-        res.json({
-          user: { firstname: user.username, email: user.email },
-          message: `Indiquez le nouveau code de confirmation envoyer a l'adresse email : ${user.email}.`,
-        });
+        const isSend = sendConfirmEMailCode(
+          user.username,
+          user.email,
+          randomNumber.randomFourDigitNumber(),
+          res
+        );
+        if (isSend === "SUCCESS") {
+          res.json({
+            user: { firstname: user.username, email: user.email },
+            message: `Indiquez le nouveau code de confirmation envoyer à l'adresse email : ${user.email}.`,
+          });
+        } else {
+          console.log("SMTP error");
+        }
       }
       if (user.status === "active") {
         res.json({
@@ -38,12 +45,11 @@ router.post("/signup/email", async (req, res) => {
         });
       }
     } else {
-      let confirmed_code = Math.floor(1000 + Math.random() * 9000);
       const user = new User({
         username,
         email,
         status: "pending",
-        confirmed_code,
+        confirmed_code: randomNumber.randomFourDigitNumber(),
         password: "",
       });
       user.save().then((user) => {
@@ -51,7 +57,7 @@ router.post("/signup/email", async (req, res) => {
           const isSend = sendConfirmEMailCode(
             user.username,
             user.email,
-            confirmed_code,
+            randomNumber.randomFourDigitNumber(),
             res
           );
           if (isSend === "SUCCESS") {
@@ -78,7 +84,7 @@ router.post("/signup/confirmemail", async (req, res) => {
   const email = req.body.email;
 
   if (code) {
-    const user = await User.findOne({ email, confirmed_code: code });
+    const user = await User.findOne({ email, code });
     if (user) {
     } else {
     }
