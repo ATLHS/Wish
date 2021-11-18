@@ -2,18 +2,18 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const exphbs = require("express-handlebars");
+// const exphbs = require("express-handlebars");
 const port = process.env.PORT || 5000;
 const path = require("path");
 const mongoose = require("mongoose");
 
-const hbs = exphbs.create({
-  defaultLayout: "main",
-  partialsDir: ["views/partials/"],
-});
-app.engine("handlebars", hbs.engine);
-app.set("view engine", "handlebars");
-app.set("public", path.join(__dirname, "./public/templates"));
+// const hbs = exphbs.create({
+//   defaultLayout: "main",
+//   partialsDir: ["views/partials/"],
+// });
+// app.engine("handlebars", hbs.engine);
+// app.set("view engine", "handlebars");
+// app.set("public", path.join(__dirname, "./public/templates"));
 
 // db config
 const url = process.env.ATLAS_URL;

@@ -1,7 +1,8 @@
 const router = require("express").Router();
-const sendConfirmEMailCode = require("../services/email");
+const emailService = require("../services/email");
 const randomNumber = require("../utils/randomDigitNumber.js");
 let User = require("../models/user");
+const { response } = require("express");
 const authorizedEmails = process.env.MEMBERS_EMAILS_ADDRESSES.split(",");
 
 router.get("/delete", (req, res, next) => {
@@ -23,13 +24,13 @@ router.post("/signup/email", async (req, res) => {
     const user = await User.findOne({ email });
     if (user) {
       if (user.status === "pending") {
-        const isSend = sendConfirmEMailCode(
-          user.username,
-          user.email,
-          randomNumber.randomFourDigitNumber(),
-          res
-        );
-        if (isSend === "SUCCESS") {
+        const isSend = await emailService
+          .send(user.email, user.username, randomNumber.randomFourDigitNumber())
+          .then((res) => res)
+          .then((response) => response)
+          .catch((err) => console.log(err));
+
+        if (isSend && isSend.accepted) {
           res.json({
             user: { firstname: user.username, email: user.email },
             message: `Indiquez le nouveau code de confirmation envoyer à l'adresse email : ${user.email}.`,
@@ -54,19 +55,23 @@ router.post("/signup/email", async (req, res) => {
       });
       user.save().then((user) => {
         if (user) {
-          const isSend = sendConfirmEMailCode(
-            user.username,
-            user.email,
-            randomNumber.randomFourDigitNumber(),
-            res
-          );
-          if (isSend === "SUCCESS") {
+          const isSend = await emailService
+            .send(
+              user.email,
+              user.username,
+              randomNumber.randomFourDigitNumber()
+            )
+            .then((res) => res)
+            .then((response) => response)
+            .catch((err) => console.log(err));
+
+          if (isSend && isSend.accepted) {
             res.json({
               user: { firstname: username, email },
               message: `Indiquez le code de confirmation envoyer a l'adresse email : ${user.email}.`,
             });
           } else {
-            console.log("SMTP error");
+            console.log("SMTP error qqqqqqqqqqqqqqqqqqqqq");
           }
         }
       });

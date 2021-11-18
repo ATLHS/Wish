@@ -8,8 +8,8 @@ import DashboardNavigation from "./components/Navigation/DashboardNavigation/Das
 function App() {
   return (
     <BrowserRouter>
-      {/* <Navigation /> */}
-      <DashboardNavigation />
+      <Navigation />
+      {/* <DashboardNavigation /> */}
       <Routes>
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/" element={<Home />} />
