@@ -19,7 +19,7 @@ router.post("/signup/email", async (req, res) => {
   const email = req.body.email;
   const username = req.body.username;
 
-  if (authorizedEmails) {
+  if (authorizedEmails.includes(email)) {
     const user = await User.findOne({ email });
     if (user) {
       if (user.status === "pending") {
@@ -83,7 +83,7 @@ router.post("/signup/email", async (req, res) => {
   } else {
     res.json({
       user: { firstname: "", email: "" },
-      message: `désolé cette adresse email : ${email} n'est pas autorisé à consulter ce site.`,
+      message: `Désolé cette adresse email : ${email} n'est pas autorisé à consulter ce site.`,
     });
   }
 });
