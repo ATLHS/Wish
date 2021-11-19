@@ -21,6 +21,7 @@
     "install": "^0.13.0",
     "mongoose": "^6.0.12",
     "nodemailer": "^6.7.0",
+    "nodemailer-express-handlebars": "^4.0.0",
     "nodemon": "^2.0.15",
     "npm": "^8.1.3"
   }

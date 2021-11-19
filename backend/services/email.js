@@ -1,5 +1,6 @@
 const nodemailer = require("nodemailer");
-
+const hbs = require("nodemailer-express-handlebars");
+const path = require("path");
 const transporter = nodemailer.createTransport({
   port: 587,
   host: "smtp-mail.outlook.com",
@@ -9,6 +10,14 @@ const transporter = nodemailer.createTransport({
   },
   secure: false,
 });
+transporter.use(
+  "compile",
+  hbs({
+    viewEngine: { encoding: "utf8", defaultLayout: false },
+    viewPath: path.join(process.cwd() + "/views"),
+    extName: ".hbs",
+  })
+);
 
 module.exports = {
   send: async (email, username, confirmationCode) => {
@@ -16,7 +25,12 @@ module.exports = {
       from: process.env.SMTP_USER_EMAIL,
       to: email,
       subject: "Confirmez votre adresse e-mail sur Wish",
-      html: `<h3>hello ${username}  votre code est : ${confirmationCode}</h3>`,
+      template: "confirm_email",
+      context: {
+        username,
+        email,
+        confirmationCode,
+      },
     };
 
     return transporter.sendMail(mailData);

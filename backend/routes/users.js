@@ -2,11 +2,10 @@ const router = require("express").Router();
 const emailService = require("../services/email");
 const randomNumber = require("../utils/randomDigitNumber.js");
 let User = require("../models/user");
-const { response } = require("express");
 const authorizedEmails = process.env.MEMBERS_EMAILS_ADDRESSES.split(",");
 
 router.get("/delete", (req, res, next) => {
-  User.findOneAndDelete({ email: "s-attilah@hotmail.com" }, (err, docs) => {
+  User.findOneAndDelete({ email: process.env.SMTP_USER_EMAIL }, (err, docs) => {
     if (err) {
       console.log(err);
     } else {
@@ -25,7 +24,12 @@ router.post("/signup/email", async (req, res) => {
     if (user) {
       if (user.status === "pending") {
         const isSend = await emailService
-          .send(user.email, user.username, randomNumber.randomFourDigitNumber())
+          .send(
+            user.email,
+            user.username,
+            randomNumber.randomFourDigitNumber(),
+            res
+          )
           .then((res) => res)
           .then((response) => response)
           .catch((err) => console.log(err));
@@ -53,28 +57,28 @@ router.post("/signup/email", async (req, res) => {
         confirmed_code: randomNumber.randomFourDigitNumber(),
         password: "",
       });
-      user.save().then((user) => {
-        if (user) {
-          const isSend = await emailService
-            .send(
-              user.email,
-              user.username,
-              randomNumber.randomFourDigitNumber()
-            )
-            .then((res) => res)
-            .then((response) => response)
-            .catch((err) => console.log(err));
+      // user.save().then((user) => {
+      //   if (user) {
+      //     const isSend = await emailService
+      //       .send(
+      //         user.email,
+      //         user.username,
+      //         randomNumber.randomFourDigitNumber()
+      //       )
+      //       .then((res) => res)
+      //       .then((response) => response)
+      //       .catch((err) => console.log(err));
 
-          if (isSend && isSend.accepted) {
-            res.json({
-              user: { firstname: username, email },
-              message: `Indiquez le code de confirmation envoyer a l'adresse email : ${user.email}.`,
-            });
-          } else {
-            console.log("SMTP error qqqqqqqqqqqqqqqqqqqqq");
-          }
-        }
-      });
+      //     if (isSend && isSend.accepted) {
+      //       res.json({
+      //         user: { firstname: username, email },
+      //         message: `Indiquez le code de confirmation envoyer a l'adresse email : ${user.email}.`,
+      //       });
+      //     } else {
+      //       console.log("SMTP error qqqqqqqqqqqqqqqqqqqqq");
+      //     }
+      //   }
+      // });
     }
   } else {
     res.json({
