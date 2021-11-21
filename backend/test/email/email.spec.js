@@ -10,10 +10,7 @@ const transporter = nodemailer.createTransport({
   },
   secure: false,
 });
-describe("ma boisson", () => {
-  beforeEach(() => {});
 
-  it("should configure nodemailer transporter with the correct parameters", () => {
-    console.log(config.verbose);
-  });
+describe("ma boisson", () => {
+  it("should send email with the correct parameters", async () => {});
 });

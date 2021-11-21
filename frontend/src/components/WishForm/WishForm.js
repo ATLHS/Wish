@@ -29,7 +29,7 @@ const WishForm = () => {
       user: { firstname, userEmail },
     } = user;
 
-    if (email && username) {
+    if (email && username && !confirmCode) {
       setIsLoading(true);
       userService
         .handleEmail(email, username)

@@ -15,7 +15,7 @@ const user = {
       );
   },
   handleConfirmCode(email, code) {
-    fetch("/users/signup/confirmemail", {
+    return fetch("/users/signup/confirmemail", {
       method: "POST",
       headers: {
         Accept: "application/json",

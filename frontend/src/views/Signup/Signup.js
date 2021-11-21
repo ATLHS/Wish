@@ -1,10 +1,11 @@
 import React from "react";
+import WishForm from "../../components/WishForm/WishForm";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-// import './Home.css';
+// import './Signup.css';
 
-export const Home = () => {
+export const Signup = () => {
   return (
     <Container
       className="bg-primary"
@@ -12,10 +13,12 @@ export const Home = () => {
       fluid
     >
       <Row className="h-100 d-flex justify-content-center">
-        <Col xs={3}></Col>
+        <Col xs={3}>
+          <WishForm />
+        </Col>
       </Row>
     </Container>
   );
 };
 
-export default Home;
+export default Signup;

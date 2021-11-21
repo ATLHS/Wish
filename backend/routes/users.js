@@ -23,19 +23,24 @@ router.post("/signup/email", async (req, res) => {
     const user = await User.findOne({ email });
     if (user) {
       if (user.status === "pending") {
+        const confirmed_code = randomNumber.randomFourDigitNumber();
+        const isUpdate = await User.findOneAndUpdate(
+          { email },
+          { confirmed_code },
+          {
+            new: true,
+          }
+        );
+
+        console.log(isUpdate);
         const isSend = await emailService
-          .send(
-            user.email,
-            user.username,
-            randomNumber.randomFourDigitNumber(),
-            res
-          )
+          .send(user.email, user.username, confirmed_code)
           .then((res) => res)
           .then((response) => response)
           .catch((err) => console.log(err));
 
-        if (isSend && isSend.accepted) {
-          res.json({
+        if (isSend && isSend.accepted && isUpdate) {
+          res.status(200).json({
             user: { firstname: user.username, email: user.email },
             message: `Indiquez le nouveau code de confirmation envoyer à l'adresse email : ${user.email}.`,
           });
@@ -95,7 +100,15 @@ router.post("/signup/confirmemail", async (req, res) => {
   if (code) {
     const user = await User.findOne({ email, code });
     if (user) {
+      res.status(200).json({
+        user: { firstname: "", email: "" },
+        message: `bienvenue sur Wish ${user.username}`,
+      });
     } else {
+      res.json({
+        user: { firstname: "", email: "" },
+        message: "Le code de confirmation n'est pas valable.",
+      });
     }
   } else {
     res.json({
@@ -103,7 +116,6 @@ router.post("/signup/confirmemail", async (req, res) => {
       message: "Un probleme est survenue, réessayer plus tard.",
     });
   }
-  res.json({ isConfirm: true });
 });
 
 module.exports = router;
