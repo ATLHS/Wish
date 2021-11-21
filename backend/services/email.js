@@ -1,6 +1,7 @@
 const nodemailer = require("nodemailer");
 const hbs = require("nodemailer-express-handlebars");
 const path = require("path");
+
 const transporter = nodemailer.createTransport({
   port: 587,
   host: process.env.SMTP_HOST,
@@ -10,6 +11,7 @@ const transporter = nodemailer.createTransport({
   },
   secure: false,
 });
+
 transporter.use(
   "compile",
   hbs({
