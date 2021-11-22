@@ -49,37 +49,34 @@ router.post("/signup/email", async (req, res) => {
         });
       }
     } else {
-      // const user = new User({
-      //   username,
-      //   email,
-      //   status: "pending",
-      //   confirmed_code: randomNumber.randomFourDigitNumber(),
-      //   password: "",
-      // });
-      // user.save().then((user) => {
-      //   if (user) {
-      //     const isSend = emailService
-      //       .send(
-      //         user.email,
-      //         user.username,
-      //         randomNumber.randomFourDigitNumber()
-      //       )
-      //       .then((res) => res)
-      //       .then((response) => response)
-      //       .catch((err) => console.log(err));
-      //     if (isSend && isSend.accepted) {
-      //       res.json({
-      //         user: { firstname: username, email },
-      //         message: `Indiquez le code de confirmation envoyer a l'adresse email : ${user.email}.`,
-      //       });
-      //     } else {
-      //       res.json({
-      //         user: { firstname: user.username, email: user.email },
-      //         message: "Un probleme est survenue, réessayer plus tard.",
-      //       });
-      //     }
-      //   }
-      // });
+      const confirmed_code = randomNumber.randomFourDigitNumber();
+      const user = new User({
+        username,
+        email,
+        status: "pending",
+        confirmed_code,
+        password: "",
+      });
+      const newUser = await user.save();
+
+      if (newUser) {
+        const isSend = await emailService
+          .send(newUser.email, newUser.username, confirmed_code)
+          .then((res) => res)
+          .then((response) => response)
+          .catch((err) => console.log(err));
+        if (isSend && isSend.accepted) {
+          res.json({
+            user: { firstname: username, email },
+            message: `Indiquez le code de confirmation envoyer a l'adresse email : ${newUser.email}.`,
+          });
+        } else {
+          res.json({
+            user: { firstname: newUser.username, email: newUser.email },
+            message: "Un probleme est survenue, réessayer plus tard.",
+          });
+        }
+      }
     }
   } else {
     res.json({
@@ -125,13 +122,13 @@ router.post("/signup/password", async (req, res) => {
       bcrypt.hash(password, saltRounds, async (err, hash) => {
         const isUpdate = await User.findOneAndUpdate(
           { email: user.email },
-          { password: hash },
+          { password: hash, status: "active" },
           {
             new: true,
           }
         );
 
-        if (isUpdate) {
+        if (!err && isUpdate) {
           res.status(200).json({
             user: { firstname: user.username, email: user.email },
             message: `Bienvenue sur Wish ${user.username}.`,
