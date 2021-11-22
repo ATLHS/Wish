@@ -1,19 +1,11 @@
 const router = require("express").Router();
 const emailService = require("../services/email");
 const randomNumber = require("../utils/randomDigitNumber.js");
-let User = require("../models/user");
-const authorizedEmails = process.env.MEMBERS_EMAILS_ADDRESSES.split(",");
+const bcrypt = require("bcrypt");
+const User = require("../models/user");
 
-router.get("/delete", (req, res, next) => {
-  User.findOneAndDelete({ email: process.env.SMTP_USER_EMAIL }, (err, docs) => {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log("Deleted User : ", docs);
-    }
-  });
-  res.json({ message: "user deleted" });
-});
+const saltRounds = 12;
+const authorizedEmails = process.env.MEMBERS_EMAILS_ADDRESSES.split(",");
 
 router.post("/signup/email", async (req, res) => {
   const email = req.body.email;
@@ -32,7 +24,6 @@ router.post("/signup/email", async (req, res) => {
           }
         );
 
-        console.log(isUpdate);
         const isSend = await emailService
           .send(user.email, user.username, confirmed_code)
           .then((res) => res)
@@ -45,7 +36,10 @@ router.post("/signup/email", async (req, res) => {
             message: `Indiquez le nouveau code de confirmation envoyer à l'adresse email : ${user.email}.`,
           });
         } else {
-          console.log("SMTP error");
+          res.json({
+            user: { firstname: user.username, email: useer.email },
+            message: "Un probleme est survenue, réessayer plus tard.",
+          });
         }
       }
       if (user.status === "active") {
@@ -55,16 +49,16 @@ router.post("/signup/email", async (req, res) => {
         });
       }
     } else {
-      const user = new User({
-        username,
-        email,
-        status: "pending",
-        confirmed_code: randomNumber.randomFourDigitNumber(),
-        password: "",
-      });
+      // const user = new User({
+      //   username,
+      //   email,
+      //   status: "pending",
+      //   confirmed_code: randomNumber.randomFourDigitNumber(),
+      //   password: "",
+      // });
       // user.save().then((user) => {
       //   if (user) {
-      //     const isSend = await emailService
+      //     const isSend = emailService
       //       .send(
       //         user.email,
       //         user.username,
@@ -73,14 +67,16 @@ router.post("/signup/email", async (req, res) => {
       //       .then((res) => res)
       //       .then((response) => response)
       //       .catch((err) => console.log(err));
-
       //     if (isSend && isSend.accepted) {
       //       res.json({
       //         user: { firstname: username, email },
       //         message: `Indiquez le code de confirmation envoyer a l'adresse email : ${user.email}.`,
       //       });
       //     } else {
-      //       console.log("SMTP error qqqqqqqqqqqqqqqqqqqqq");
+      //       res.json({
+      //         user: { firstname: user.username, email: user.email },
+      //         message: "Un probleme est survenue, réessayer plus tard.",
+      //       });
       //     }
       //   }
       // });
@@ -114,7 +110,7 @@ router.post("/signup/confirmemail", async (req, res) => {
     }
   } else {
     res.json({
-      user: { firstname: "", email: "" },
+      user: { firstname: user.username, email: useer.email },
       message: "Un probleme est survenue, réessayer plus tard.",
     });
   }
@@ -122,30 +118,38 @@ router.post("/signup/confirmemail", async (req, res) => {
 
 router.post("/signup/password", async (req, res) => {
   const { email, password } = req.body;
-  console.log(password, "password")
 
   if (password) {
     const user = await User.findOne({ email });
     if (user) {
-      const isUpdate = await User.findOneAndUpdate(
-        { email },
-        { password },
-        {
-          new: true,
-        }
-      );
+      bcrypt.hash(password, saltRounds, async (err, hash) => {
+        const isUpdate = await User.findOneAndUpdate(
+          { email: user.email },
+          { password: hash },
+          {
+            new: true,
+          }
+        );
 
-      // res.status(200).json({
-      //   user: { firstname: "", email: "" },
-      //   message: `Indiquer un mot de passe.`,
-      //   isValidCode: true,
-      // });
-      console.log(isUpdate, "isUpdate");
+        if (isUpdate) {
+          res.status(200).json({
+            user: { firstname: user.username, email: user.email },
+            message: `Bienvenue sur Wish ${user.username}.`,
+            isUpdate: true,
+          });
+        } else {
+          res.json({
+            user: { firstname: user.username, email: useer.email },
+            message: "Un probleme est survenue, réessayer plus tard.",
+            isUpdate: false,
+          });
+        }
+      });
     } else {
       res.json({
-        user: { firstname: "", email: "" },
-        message: "Le code de confirmation n'est pas valable.",
-        isValidCode: false,
+        user: { firstname: user.username, email: useer.email },
+        message: "Un probleme est survenue, réessayer plus tard.",
+        isUpdate: false,
       });
     }
   } else {
@@ -155,4 +159,5 @@ router.post("/signup/password", async (req, res) => {
     });
   }
 });
+
 module.exports = router;
