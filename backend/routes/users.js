@@ -102,12 +102,14 @@ router.post("/signup/confirmemail", async (req, res) => {
     if (user) {
       res.status(200).json({
         user: { firstname: "", email: "" },
-        message: `bienvenue sur Wish ${user.username}`,
+        message: `Indiquer un mot de passe.`,
+        isValidCode: true,
       });
     } else {
       res.json({
         user: { firstname: "", email: "" },
         message: "Le code de confirmation n'est pas valable.",
+        isValidCode: false,
       });
     }
   } else {

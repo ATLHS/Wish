@@ -15,6 +15,8 @@ const WishForm = () => {
   const [confirmCode, setConfirmCode] = useState("");
   const [validated, setValidated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isValidCode, setIsValidCode] = useState(false);
+  const [password, setPassword] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -44,7 +46,7 @@ const WishForm = () => {
         });
     }
 
-    if (firstname && confirmCode) {
+    if (firstname && confirmCode && !password) {
       setIsLoading(true);
       userService
         .handleConfirmCode(userEmail, confirmCode)
@@ -52,8 +54,12 @@ const WishForm = () => {
         .then((r) => {
           setIsLoading(false);
           setMessage(r.message);
-          console.log(r);
+          setIsValidCode(r.isValidCode);
         });
+    }
+
+    if (password) {
+      setIsLoading(true);
     }
   };
 
@@ -67,10 +73,20 @@ const WishForm = () => {
       <h2 className="wishform-title">
         {!user.user.firstname
           ? "Bienvenue sur Wish."
-          : `Hello ${user.user.firstname} !`}
+          : !isValidCode
+          ? "Tu y es presque."
+          : "Un dernier petit pas !"}
       </h2>
       <p className="wishform-headline">
-        {!message ? "Indiquez votre e-mail pour commencer" : message}
+        {!isLoading ? (
+          !message ? (
+            "Indiquez votre e-mail pour commencer"
+          ) : (
+            message
+          )
+        ) : (
+          <div></div>
+        )}
       </p>
       {!isLoading ? (
         !user.user.firstname ? (
@@ -111,7 +127,7 @@ const WishForm = () => {
           <Spinner animation="border" variant="primary" size="lg" />
         </Form.Group>
       )}
-      {user.user.firstname ? (
+      {user.user.firstname && !isValidCode ? (
         <Form.Group className="wishform-group" controlId="formGroupFirstCode">
           <Form.Control
             required
@@ -126,6 +142,22 @@ const WishForm = () => {
       ) : (
         <div></div>
       )}
+      {isValidCode ? (
+        <Form.Group className="wishform-group" controlId="formGroupPassword">
+          <Form.Control
+            required
+            type="text"
+            placeholder="Mot de passe"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <Form.Control.Feedback type="invalid">
+            Indiquez votre mot de passe 🙏.
+          </Form.Control.Feedback>
+        </Form.Group>
+      ) : (
+        <div></div>
+      )}
+
       <Form.Group className="wishform-group">
         <Button
           className="wishform-button"

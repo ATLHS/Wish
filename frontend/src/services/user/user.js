@@ -29,6 +29,21 @@ const user = {
         (err) => console.log(err)
       );
   },
+  handleUserPaswword(email, password) {
+    return fetch("/users/signup/password", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    })
+      .then((res) => res.json())
+      .then(
+        (response) => response,
+        (err) => console.log(err)
+      );
+  },
 };
 
 export default user;
