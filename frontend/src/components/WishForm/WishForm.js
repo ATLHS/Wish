@@ -60,6 +60,13 @@ const WishForm = () => {
 
     if (password) {
       setIsLoading(true);
+      userService
+        .handleUserPaswword(userEmail, password)
+        .then((res) => res)
+        .then((r) => {
+          setIsLoading(false);
+          setMessage(r.message);
+        });
     }
   };
 

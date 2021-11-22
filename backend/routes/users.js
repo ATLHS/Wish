@@ -120,4 +120,39 @@ router.post("/signup/confirmemail", async (req, res) => {
   }
 });
 
+router.post("/signup/password", async (req, res) => {
+  const { email, password } = req.body;
+  console.log(password, "password")
+
+  if (password) {
+    const user = await User.findOne({ email });
+    if (user) {
+      const isUpdate = await User.findOneAndUpdate(
+        { email },
+        { password },
+        {
+          new: true,
+        }
+      );
+
+      // res.status(200).json({
+      //   user: { firstname: "", email: "" },
+      //   message: `Indiquer un mot de passe.`,
+      //   isValidCode: true,
+      // });
+      console.log(isUpdate, "isUpdate");
+    } else {
+      res.json({
+        user: { firstname: "", email: "" },
+        message: "Le code de confirmation n'est pas valable.",
+        isValidCode: false,
+      });
+    }
+  } else {
+    res.json({
+      user: { firstname: "", email: "" },
+      message: "Un probleme est survenue, réessayer plus tard.",
+    });
+  }
+});
 module.exports = router;
