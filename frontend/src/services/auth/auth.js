@@ -1,6 +1,6 @@
 const user = {
   handleEmail(email, username) {
-    return fetch("/users/signup/email", {
+    return fetch("/auth/signup/email", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -15,7 +15,7 @@ const user = {
       );
   },
   handleConfirmCode(email, code) {
-    return fetch("/users/signup/confirmemail", {
+    return fetch("/auth/signup/confirmemail", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -30,7 +30,7 @@ const user = {
       );
   },
   handleUserPaswword(email, password) {
-    return fetch("/users/signup/password", {
+    return fetch("/auth/signup/password", {
       method: "POST",
       headers: {
         Accept: "application/json",

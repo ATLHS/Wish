@@ -1,8 +1,8 @@
 const router = require("express").Router();
-const emailService = require("../services/email");
-const randomNumber = require("../utils/randomDigitNumber.js");
+const emailService = require("../../services/email");
+const randomNumber = require("../../utils/randomDigitNumber.js");
 const bcrypt = require("bcrypt");
-const User = require("../models/user");
+const User = require("../../models/user");
 
 const saltRounds = 12;
 const authorizedEmails = process.env.MEMBERS_EMAILS_ADDRESSES.split(",");

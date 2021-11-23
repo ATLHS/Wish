@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
-import userService from "../../services/user/user";
+import authService from "../../services/auth/auth";
 import "./WishForm.css";
 
 const WishForm = () => {
@@ -33,7 +33,7 @@ const WishForm = () => {
 
     if (email && username && !confirmCode) {
       setIsLoading(true);
-      userService
+      authService
         .handleEmail(email, username)
         .then((res) => res)
         .then((r) => {
@@ -48,7 +48,7 @@ const WishForm = () => {
 
     if (firstname && confirmCode && !password) {
       setIsLoading(true);
-      userService
+      authService
         .handleConfirmCode(userEmail, confirmCode)
         .then((res) => res)
         .then((r) => {
@@ -60,7 +60,7 @@ const WishForm = () => {
 
     if (password) {
       setIsLoading(true);
-      userService
+      authService
         .handleUserPaswword(userEmail, password)
         .then((res) => res)
         .then((r) => {

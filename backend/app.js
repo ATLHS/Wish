@@ -22,8 +22,8 @@ app.use(express.json());
 app.use(cors());
 app.use(express.static("public"));
 
-const usersRouter = require("./routes/users");
+const authRouter = require("./routes/api/auth");
 
-app.use("/users", usersRouter);
+app.use("/auth", authRouter);
 
 app.listen(port, () => console.log(`Wish listening on port ${port}`));
