@@ -43,7 +43,8 @@ const WishForm = () => {
           });
           setMessage(r.message);
           setIsLoading(false);
-        });
+        })
+        .catch((err) => setMessage(err.message));
     }
 
     if (firstname && confirmCode && !password) {
@@ -55,7 +56,8 @@ const WishForm = () => {
           setIsLoading(false);
           setMessage(r.message);
           setIsValidCode(r.isValidCode);
-        });
+        })
+        .catch((err) => setMessage(err.message));
     }
 
     if (password) {
@@ -66,7 +68,8 @@ const WishForm = () => {
         .then((r) => {
           setIsLoading(false);
           setMessage(r.message);
-        });
+        })
+        .catch((err) => setMessage(err.message));
     }
   };
 

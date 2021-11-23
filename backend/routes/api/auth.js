@@ -7,6 +7,9 @@ const User = require("../../models/user");
 const saltRounds = 12;
 const authorizedEmails = process.env.MEMBERS_EMAILS_ADDRESSES.split(",");
 
+// @route POST auth/signup/email
+// @description save new user
+// @access Public
 router.post("/signup/email", async (req, res) => {
   const email = req.body.email;
   const username = req.body.username;
@@ -36,14 +39,14 @@ router.post("/signup/email", async (req, res) => {
             message: `Indiquez le nouveau code de confirmation envoyer à l'adresse email : ${user.email}.`,
           });
         } else {
-          res.json({
+          res.status(400).json({
             user: { firstname: user.username, email: useer.email },
             message: "Un probleme est survenue, réessayer plus tard.",
           });
         }
       }
       if (user.status === "active") {
-        res.json({
+        res.status(400).json({
           user: { firstname: "", email: "" },
           message: `Un compte wish existe deja avec l'adresse email : ${user.email} 🙄`,
         });
@@ -71,7 +74,7 @@ router.post("/signup/email", async (req, res) => {
             message: `Indiquez le code de confirmation envoyer a l'adresse email : ${newUser.email}.`,
           });
         } else {
-          res.json({
+          res.status(400).json({
             user: { firstname: newUser.username, email: newUser.email },
             message: "Un probleme est survenue, réessayer plus tard.",
           });
@@ -79,19 +82,21 @@ router.post("/signup/email", async (req, res) => {
       }
     }
   } else {
-    res.json({
+    res.status(400).json({
       user: { firstname: "", email: "" },
       message: `Désolé cette adresse email : ${email} n'est pas autorisé à consulter ce site.`,
     });
   }
 });
 
+// @route POST auth/signup/confirmemail
+// @description confirm user email address
+// @access Public
 router.post("/signup/confirmemail", async (req, res) => {
-  const code = req.body.code;
-  const email = req.body.email;
+  const { email, code } = req.body;
 
   if (code) {
-    const user = await User.findOne({ email, code });
+    const user = await User.find({ email, code });
     if (user) {
       res.status(200).json({
         user: { firstname: "", email: "" },
@@ -99,20 +104,23 @@ router.post("/signup/confirmemail", async (req, res) => {
         isValidCode: true,
       });
     } else {
-      res.json({
+      res.status(400).json({
         user: { firstname: "", email: "" },
         message: "Le code de confirmation n'est pas valable.",
         isValidCode: false,
       });
     }
   } else {
-    res.json({
+    res.status(400).json({
       user: { firstname: user.username, email: useer.email },
       message: "Un probleme est survenue, réessayer plus tard.",
     });
   }
 });
 
+// @route POST auth/signup/password
+// @description create user password
+// @access Public
 router.post("/signup/password", async (req, res) => {
   const { email, password } = req.body;
 

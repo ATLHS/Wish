@@ -9,10 +9,8 @@ const user = {
       body: JSON.stringify({ email, username }),
     })
       .then((res) => res.json())
-      .then(
-        (response) => response,
-        (err) => console.log(err)
-      );
+      .then((response) => response)
+      .catch((err) => err);
   },
   handleConfirmCode(email, code) {
     return fetch("/auth/signup/confirmemail", {
@@ -24,10 +22,8 @@ const user = {
       body: JSON.stringify({ email, code }),
     })
       .then((res) => res.json())
-      .then(
-        (response) => response,
-        (err) => console.log(err)
-      );
+      .then((response) => response)
+      .catch((err) => err);
   },
   handleUserPaswword(email, password) {
     return fetch("/auth/signup/password", {
@@ -39,10 +35,8 @@ const user = {
       body: JSON.stringify({ email, password }),
     })
       .then((res) => res.json())
-      .then(
-        (response) => response,
-        (err) => console.log(err)
-      );
+      .then((response) => response)
+      .catch((err) => err);
   },
 };
 
