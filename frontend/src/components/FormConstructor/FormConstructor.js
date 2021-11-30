@@ -1,6 +1,6 @@
 import React from "react";
-import InputField from "../FormElement/InputField";
-import TextareaField from "../FormElement/TextareaField";
+import InputField from "../FormElement/InputField/InputField";
+import TextareaField from "../FormElement/TextareaField/TextareaField";
 
 const FormConstructor = ({ events, field }) => {
   switch (field.type) {

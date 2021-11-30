@@ -1,8 +1,9 @@
 import React from "react";
 import Form from "react-bootstrap/Form";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
+import "./InputField.css";
 
-const TextareaField = ({
+const InputField = ({
   field: { onChange, onBlur, value, name, ref },
   fieldState: { invalid, isTouched, isDirty, error },
   formState: { errors },
@@ -10,14 +11,9 @@ const TextareaField = ({
   label,
   placeholder,
 }) => (
-  <FloatingLabel controlId={label} label={label}>
-    <Form.Control
-      as="textarea"
-      placeholder={placeholder}
-      style={{ height: "100px" }}
-      onChange={onChange}
-    />
+  <FloatingLabel className="input-field" controlId={label} label={label}>
+    <Form.Control onChange={onChange} type={type} placeholder={placeholder} />
   </FloatingLabel>
 );
 
-export default TextareaField;
+export default InputField;
