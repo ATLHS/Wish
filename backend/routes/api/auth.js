@@ -165,4 +165,15 @@ router.post("/signup/password", async (req, res) => {
   }
 });
 
+// @route POST auth/login
+// @description login user test
+// @access Public
+router.post("/login", async (req, res) => {
+  console.log("hhnnnnnnnnnnnn")
+  const { email, password } = req.body;
+
+  console.log(`User email is ${email} and password is : ${password}`);
+  res.json({ message: "Tentative de connexion." });
+});
+
 module.exports = router;

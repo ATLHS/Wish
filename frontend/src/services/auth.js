@@ -12,6 +12,20 @@ const user = {
       .then((response) => response)
       .catch((err) => err);
   },
+  handleLogin(email, password) {
+    console.log("hhh")
+    return fetch("/auth/login", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    })
+      .then((res) => res.json())
+      .then((response) => response)
+      .catch((err) => err);
+  },
   handleConfirmCode(email, code) {
     return fetch("/auth/signup/confirmemail", {
       method: "POST",

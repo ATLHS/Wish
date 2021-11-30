@@ -1,0 +1,20 @@
+.loginform {
+  background-color: white;
+  padding: 10px;
+  margin-top: 50%;
+  border-radius: 5px;
+}
+.loginform-group {
+  text-align: center;
+  margin: 10px;
+}
+.loginform-title {
+  text-align: center;
+  font-weight: bold;
+}
+.loginform-headline {
+  text-align: center;
+}
+.loginform-button {
+  width: 100%;
+}

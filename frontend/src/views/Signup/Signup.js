@@ -1,5 +1,5 @@
 import React from "react";
-import WishForm from "../../components/WishForm/WishForm";
+import SignupForm from "../../components/Form/SignupForm/SignupForm";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -9,12 +9,12 @@ export const Signup = () => {
   return (
     <Container
       className="bg-primary"
-      style={{ height: window.innerHeight }}
+      style={{ height: window.outerHeight }}
       fluid
     >
-      <Row className="h-100 d-flex justify-content-center">
-        <Col xs={3}>
-          <WishForm />
+      <Row>
+        <Col className="m-auto" md={3}>
+          <SignupForm />
         </Col>
       </Row>
     </Container>
