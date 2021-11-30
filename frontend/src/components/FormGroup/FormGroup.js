@@ -2,7 +2,7 @@ import React from "react";
 import { Controller } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import FormConstructor from "../FormConstructor/FormConstructor";
-import Message from "../Message/Message";
+import MessageHelper from "../MessageHelper/MessageHelper";
 
 const FormGroup = ({ schema, control }) => {
   return schema.map((field, i) => {
@@ -17,7 +17,7 @@ const FormGroup = ({ schema, control }) => {
             <ErrorMessage
               errors={props.formState.errors}
               name={field.label}
-              render={({ message }) => <Message message={message} />}
+              render={({ message }) => <MessageHelper message={message} />}
             />
           </>
         )}

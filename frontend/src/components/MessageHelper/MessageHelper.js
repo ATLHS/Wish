@@ -1,11 +1,11 @@
 import React from "react";
 import Form from "react-bootstrap/Form";
-import "./Message.css";
+import "./MessageHelper.css";
 
-const Message = ({ message }) => (
+const MessageHelper = ({ message }) => (
   <Form.Text className="error-message" muted={false}>
     {message}
   </Form.Text>
 );
 
-export default Message;
+export default MessageHelper;
