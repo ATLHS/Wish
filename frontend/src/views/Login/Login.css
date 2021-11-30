@@ -8,12 +8,14 @@
   text-align: center;
   margin: 10px;
 }
-.loginform-title {
+.login-title {
   text-align: center;
   font-weight: bold;
+  margin: 10px;
 }
 .loginform-headline {
   text-align: center;
+  margin: 10px;
 }
 .loginform-button {
   width: 100%;

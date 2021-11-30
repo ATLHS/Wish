@@ -1,0 +1,27 @@
+{
+  "title": "Login form",
+  "description": "User credential fields",
+  "type": "object",
+  "fields": {
+    "email": {
+      "label": "email",
+      "description": "User email",
+      "type": "text",
+      "default": "",
+      "placeholder": "Email",
+      "validation": {
+        "required": "Indiquez un email 🙏."
+      }
+    },
+    "password": {
+      "label": "password",
+      "description": "User email",
+      "type": "text",
+      "default": "",
+      "placeholder": "Mot de passe",
+      "validation": {
+        "required": "Indiquez un mot de passe 🙏."
+      }
+    }
+  }
+}

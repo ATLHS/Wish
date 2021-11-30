@@ -13,7 +13,6 @@ const user = {
       .catch((err) => err);
   },
   handleLogin(email, password) {
-    console.log("hhh")
     return fetch("/auth/login", {
       method: "POST",
       headers: {

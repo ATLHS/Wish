@@ -11,27 +11,24 @@ import Button from "react-bootstrap/Button";
 import "./Login.css";
 
 const Login = () => {
-  // const [message, setMessage] = useState("");
+  const [message, setMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
   const { handleSubmit, control } = useForm();
   const onSubmit = (data, e) => {
-    console.log(data, "data");
-    e.preventDefault();
-
     const { email, password } = data;
 
     if (email && password) {
-      // setIsLoading(true);
+      setIsLoading(true);
       authService
         .handleLogin(email, password)
         .then((res) => res)
         .then((r) => {
-          // setMessage(r.message);
-          // setIsLoading(false);
-          console.log(r);
+          setMessage(r.message);
+          setIsLoading(false);
         })
         .catch((err) => {
-          return;
-          // setMessage(err.message);
+          setMessage(err.message);
         });
     }
   };
@@ -49,19 +46,14 @@ const Login = () => {
       <Row className="login-row">
         <Col className="login-col m-auto" xs={3}>
           <Form onSubmit={handleSubmit(onSubmit)} className="loginform">
-            {/* <h2 className="login-title">Connexion</h2>
+            <h2 className="login-title">Connexion</h2>
             <p className="loginform-headline">
-              {!isLoading ? (
-                !message ? (
-                  "Indiquez votre e-mail et votre mot de pass pour commencer"
-                ) : (
-                  message
-                )
-              ) : (
-                <div></div>
-              )}
-            </p> */}
-
+              {!isLoading
+                ? !message
+                  ? "Indiquez votre e-mail et votre mot de pass pour commencer"
+                  : message
+                : ""}
+            </p>
             <FormGroup schema={schemaProperties} control={control} />
             <Form.Group className="loginform-group">
               <Button

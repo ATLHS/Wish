@@ -75,10 +75,7 @@
 
 //   return (
 //     <Form
-//       noValidate
-//       validated={validated}
-//       onSubmit={handleSubmit}
-//       className="wishform"
+//       onSubmit={handleSubmit(onSubmit)} className="signup-form"
 //     >
 //       <h2 className="wishform-title">
 //         {!user.user.firstname
