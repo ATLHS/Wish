@@ -1,10 +1,10 @@
 import React from "react";
 import { Controller } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
-import Field from "../Field/Field";
+import FormConstructor from "../FormConstructor/FormConstructor";
 // import "./LoginForm.css";
 
-const FormElement = ({ schema, control }) => {
+const FormGroup = ({ schema, control }) => {
   return schema.map((field, i) => {
     return (
       <Controller
@@ -13,7 +13,7 @@ const FormElement = ({ schema, control }) => {
         name={field.label}
         render={(props) => (
           <>
-            <Field {...props} {...field} />
+            <FormConstructor events={props} field={field} />
             <ErrorMessage
               errors={props.formState.errors}
               name={field.label}
@@ -31,4 +31,4 @@ const FormElement = ({ schema, control }) => {
   });
 };
 
-export default FormElement;
+export default FormGroup;

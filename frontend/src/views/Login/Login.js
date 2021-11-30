@@ -5,7 +5,7 @@ import Col from "react-bootstrap/Col";
 import authService from "../../services/auth";
 import { useForm } from "react-hook-form";
 import loginJsonSchemaForm from "../../schemas/loginJsonSchemaForm";
-import FormElement from "../../components/FormElement/FormElement";
+import FormGroup from "../../components/FormGroup/FormGroup";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "./Login.css";
@@ -62,7 +62,7 @@ const Login = () => {
               )}
             </p> */}
 
-            <FormElement schema={schemaProperties} control={control} />
+            <FormGroup schema={schemaProperties} control={control} />
             <Form.Group className="loginform-group">
               <Button
                 className="loginform-button"
