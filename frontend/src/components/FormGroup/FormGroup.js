@@ -10,13 +10,13 @@ const FormGroup = ({ schema, control }) => {
       <Controller
         key={i}
         control={control}
-        name={field.label}
+        name={field.name}
         render={(props) => (
           <>
             <FormConstructor events={props} field={field} />
             <ErrorMessage
               errors={props.formState.errors}
-              name={field.label}
+              name={field.name}
               render={({ message }) => <MessageHelper message={message} />}
             />
           </>

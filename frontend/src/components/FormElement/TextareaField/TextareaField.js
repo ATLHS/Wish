@@ -13,9 +13,9 @@ const TextareaField = ({
 }) => (
   <FloatingLabel className="textarea-field" controlId={label} label={label}>
     <Form.Control
+      className="textarea-field-input"
       as="textarea"
       placeholder={placeholder}
-      style={{ height: "100px" }}
       onChange={onChange}
     />
   </FloatingLabel>

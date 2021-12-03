@@ -4,7 +4,8 @@
   "type": "object",
   "fields": {
     "email": {
-      "label": "email",
+      "label": "Email",
+      "name": "email",
       "description": "User email",
       "type": "text",
       "default": "",
@@ -14,8 +15,9 @@
       }
     },
     "password": {
-      "label": "password",
-      "description": "User email",
+      "label": "Password",
+      "name": "password",
+      "description": "User password",
       "type": "text",
       "default": "",
       "placeholder": "Mot de passe",

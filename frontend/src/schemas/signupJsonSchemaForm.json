@@ -1,21 +1,45 @@
 {
-  "title": "Login form",
+  "title": "Signup form",
   "description": "User credential fields",
   "type": "object",
   "fields": {
     "email": {
-      "label": "email",
+      "label": "Email",
+      "name": "email",
       "description": "User email",
-      "type": "text",
+      "type": "email",
       "default": "",
       "placeholder": "Email",
       "validation": {
         "required": "Indiquez un email 🙏."
       }
     },
+    "username": {
+      "label": "Prénom",
+      "name": "username",
+      "description": "User firstname",
+      "type": "text",
+      "default": "",
+      "placeholder": "Prénom",
+      "validation": {
+        "required": "Indiquez un prénom 🙏."
+      }
+    },
+    "confirmCode": {
+      "label": "Code de confirmation",
+      "name": "confirmCode",
+      "description": "Confirmation code",
+      "type": "text",
+      "default": "",
+      "placeholder": "Code",
+      "validation": {
+        "required": "Indiquez le code de confirmation 🙏."
+      }
+    },
     "password": {
-      "label": "password",
-      "description": "User email",
+      "label": "Mot de passe",
+      "name": "password",
+      "description": "User password",
       "type": "text",
       "default": "",
       "placeholder": "Mot de passe",

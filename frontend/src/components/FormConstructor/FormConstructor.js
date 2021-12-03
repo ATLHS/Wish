@@ -8,6 +8,8 @@ const FormConstructor = ({ events, field }) => {
       return <InputField {...events} {...field} />;
     case "textarea":
       return <TextareaField {...events} {...field} />;
+    case "email":
+      return <InputField {...events} {...field} />;
     default:
       return;
   }

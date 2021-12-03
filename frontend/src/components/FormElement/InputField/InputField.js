@@ -11,7 +11,7 @@ const InputField = ({
   label,
   placeholder,
 }) => (
-  <FloatingLabel className="input-field" controlId={label} label={label}>
+  <FloatingLabel className="input-field" controlId={name} label={label}>
     <Form.Control onChange={onChange} type={type} placeholder={placeholder} />
   </FloatingLabel>
 );

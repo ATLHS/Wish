@@ -1,13 +1,14 @@
-import React, { useState } from "react";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import authService from "../../services/auth";
 import { useForm } from "react-hook-form";
-import loginJsonSchemaForm from "../../schemas/loginJsonSchemaForm";
-import FormGroup from "../../components/FormGroup/FormGroup";
-import Form from "react-bootstrap/Form";
+import authService from "../../services/auth";
 import Button from "react-bootstrap/Button";
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import Form from "react-bootstrap/Form";
+import FormGroup from "../../components/FormGroup/FormGroup";
+import loginJsonSchemaForm from "../../schemas/loginJsonSchemaForm";
+import React, { useState } from "react";
+import Row from "react-bootstrap/Row";
+import Spinner from "react-bootstrap/Spinner";
 import "./Login.css";
 
 const Login = () => {
@@ -45,19 +46,25 @@ const Login = () => {
     >
       <Row className="login-row">
         <Col className="login-col m-auto" xs={3}>
-          <Form onSubmit={handleSubmit(onSubmit)} className="loginform">
-            <h2 className="login-title">Connexion</h2>
-            <p className="loginform-headline">
-              {!isLoading
-                ? !message
-                  ? "Indiquez votre e-mail et votre mot de pass pour commencer"
-                  : message
-                : ""}
-            </p>
+          <Form onSubmit={handleSubmit(onSubmit)} className="login-form">
+            <h2 className="login-form-title">Connexion</h2>
+            <div className="login-form-headline">
+              {!isLoading ? (
+                !message ? (
+                  "Indiquez votre e-mail et votre mot de pass pour commencer"
+                ) : (
+                  message
+                )
+              ) : (
+                <Form.Group className="wishform-group">
+                  <Spinner animation="border" variant="primary" size="lg" />
+                </Form.Group>
+              )}
+            </div>
             <FormGroup schema={schemaProperties} control={control} />
-            <Form.Group className="loginform-group">
+            <Form.Group className="login-form-group">
               <Button
-                className="loginform-button"
+                className="login-form-button"
                 variant="primary"
                 size="lg"
                 type="submit"
