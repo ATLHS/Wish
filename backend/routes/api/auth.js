@@ -35,19 +35,19 @@ router.post("/signup/email", async (req, res) => {
 
         if (isSend && isSend.accepted && isUpdate) {
           res.status(200).json({
-            user: { firstname: user.username, email: user.email },
+            user: { username: user.username, email: user.email },
             message: `Indiquez le nouveau code de confirmation envoyer à l'adresse email : ${user.email}.`,
           });
         } else {
           res.status(400).json({
-            user: { firstname: user.username, email: useer.email },
+            user: { username: user.username, email: useer.email },
             message: "Un probleme est survenue, réessayer plus tard.",
           });
         }
       }
       if (user.status === "active") {
         res.status(400).json({
-          user: { firstname: "", email: "" },
+          user: { username: "", email: "" },
           message: `Un compte wish existe deja avec l'adresse email : ${user.email} 🙄`,
         });
       }
@@ -70,12 +70,12 @@ router.post("/signup/email", async (req, res) => {
           .catch((err) => console.log(err));
         if (isSend && isSend.accepted) {
           res.json({
-            user: { firstname: username, email },
+            user: { username: username, email },
             message: `Indiquez le code de confirmation envoyer a l'adresse email : ${newUser.email}.`,
           });
         } else {
           res.status(400).json({
-            user: { firstname: newUser.username, email: newUser.email },
+            user: { username: newUser.username, email: newUser.email },
             message: "Un probleme est survenue, réessayer plus tard.",
           });
         }
@@ -83,8 +83,8 @@ router.post("/signup/email", async (req, res) => {
     }
   } else {
     res.status(400).json({
-      user: { firstname: "", email: "" },
-      message: `Désolé cette adresse email : ${email} n'est pas autorisé à consulter ce site.`,
+      user: { username: "", email: "" },
+      message: `Désolé cette l'adresse email : ${email} n'est pas autorisé à consulter ce site.`,
     });
   }
 });
@@ -99,20 +99,20 @@ router.post("/signup/confirmemail", async (req, res) => {
     const user = await User.find({ email, code });
     if (user) {
       res.status(200).json({
-        user: { firstname: "", email: "" },
+        user: { username: "", email: "" },
         message: `Indiquer un mot de passe.`,
         isValidCode: true,
       });
     } else {
       res.status(400).json({
-        user: { firstname: "", email: "" },
+        user: { username: "", email: "" },
         message: "Le code de confirmation n'est pas valable.",
         isValidCode: false,
       });
     }
   } else {
     res.status(400).json({
-      user: { firstname: user.username, email: useer.email },
+      user: { username: user.username, email: useer.email },
       message: "Un probleme est survenue, réessayer plus tard.",
     });
   }
@@ -138,13 +138,13 @@ router.post("/signup/password", async (req, res) => {
 
         if (!err && isUpdate) {
           res.status(200).json({
-            user: { firstname: user.username, email: user.email },
+            user: { username: user.username, email: user.email },
             message: `Bienvenue sur Wish ${user.username}.`,
             isUpdate: true,
           });
         } else {
           res.json({
-            user: { firstname: user.username, email: useer.email },
+            user: { username: user.username, email: useer.email },
             message: "Un probleme est survenue, réessayer plus tard.",
             isUpdate: false,
           });
@@ -152,14 +152,14 @@ router.post("/signup/password", async (req, res) => {
       });
     } else {
       res.json({
-        user: { firstname: user.username, email: useer.email },
+        user: { username: user.username, email: useer.email },
         message: "Un probleme est survenue, réessayer plus tard.",
         isUpdate: false,
       });
     }
   } else {
     res.json({
-      user: { firstname: "", email: "" },
+      user: { username: "", email: "" },
       message: "Un probleme est survenue, réessayer plus tard.",
     });
   }

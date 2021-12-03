@@ -51,7 +51,7 @@ export const Signup = () => {
         .then((r) => {
           setUser({
             ...user,
-            username: r.user.firstname,
+            username: r.user.username,
             email: r.user.email,
           });
           setMessage(r.message);
