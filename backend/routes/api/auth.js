@@ -10,7 +10,7 @@ const authorizedEmails = process.env.MEMBERS_EMAILS_ADDRESSES.split(",");
 // @route POST auth/signup/email
 // @description save new user
 // @access Public
-router.post("/signup/email", async (req, res) => {
+router.post("/signup", async (req, res) => {
   const email = req.body.email;
   const username = req.body.username;
 
@@ -92,7 +92,7 @@ router.post("/signup/email", async (req, res) => {
 // @route POST auth/signup/confirmemail
 // @description confirm user email address
 // @access Public
-router.post("/signup/confirmemail", async (req, res) => {
+router.post("/email", async (req, res) => {
   const { email, code } = req.body;
 
   if (code) {
@@ -121,7 +121,7 @@ router.post("/signup/confirmemail", async (req, res) => {
 // @route POST auth/signup/password
 // @description create user password
 // @access Public
-router.post("/signup/password", async (req, res) => {
+router.post("/password", async (req, res) => {
   const { email, password } = req.body;
 
   if (password) {
@@ -165,10 +165,10 @@ router.post("/signup/password", async (req, res) => {
   }
 });
 
-// @route POST auth/login
-// @description login user test
+// @route POST auth/signin
+// @description signin user test
 // @access Public
-router.post("/login", async (req, res) => {
+router.post("/signin", async (req, res) => {
   const { email, password } = req.body;
   res.json({ message: "Tentative de connexion." });
 });

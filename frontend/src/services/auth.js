@@ -1,6 +1,6 @@
 const user = {
   handleEmail(email, username) {
-    return fetch("/auth/signup/email", {
+    return fetch("/api/auth/signup", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -12,8 +12,8 @@ const user = {
       .then((response) => response)
       .catch((err) => err);
   },
-  handleLogin(email, password) {
-    return fetch("/auth/login", {
+  handleSignIn(email, password) {
+    return fetch("/api/auth/signin", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -26,7 +26,7 @@ const user = {
       .catch((err) => err);
   },
   handleConfirmCode(email, code) {
-    return fetch("/auth/signup/confirmemail", {
+    return fetch("/api/auth/email", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -39,7 +39,7 @@ const user = {
       .catch((err) => err);
   },
   handleUserPaswword(email, password) {
-    return fetch("/auth/signup/password", {
+    return fetch("/api/auth/password", {
       method: "POST",
       headers: {
         Accept: "application/json",

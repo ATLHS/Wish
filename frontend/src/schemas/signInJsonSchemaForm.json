@@ -1,5 +1,5 @@
 {
-  "title": "Login form",
+  "title": "Sign in form",
   "description": "User credential fields",
   "type": "object",
   "fields": {

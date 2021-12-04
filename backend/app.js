@@ -26,6 +26,6 @@ app.use(express.static("public"));
 
 const authRouter = require("./routes/api/auth");
 
-app.use("/auth", authRouter);
+app.use("/api/auth", authRouter);
 
 app.listen(port, () => console.log(`Wish listening on port ${port}`));
