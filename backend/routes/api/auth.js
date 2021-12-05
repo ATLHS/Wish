@@ -94,10 +94,11 @@ router.post("/signup", async (req, res) => {
 // @access Public
 router.post("/email", async (req, res) => {
   const { email, code } = req.body;
-
   if (code) {
-    const user = await User.find({ email, code });
-    if (user) {
+    const user = await User.findOne({ email });
+    const isValidCode = user.confirmed_code === Number(code);
+
+    if (user && isValidCode) {
       res.status(200).json({
         user: { username: "", email: "" },
         message: `Indiquer un mot de passe.`,
@@ -106,7 +107,7 @@ router.post("/email", async (req, res) => {
     } else {
       res.status(400).json({
         user: { username: "", email: "" },
-        message: "Le code de confirmation n'est pas valable.",
+        message: "Le code de confirmation n'est pas valide.",
         isValidCode: false,
       });
     }
