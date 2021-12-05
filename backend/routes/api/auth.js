@@ -2,6 +2,7 @@ const router = require("express").Router();
 const emailService = require("../../services/email");
 const randomNumber = require("../../utils/randomDigitNumber.js");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const User = require("../../models/user");
 
 const saltRounds = 12;
@@ -173,12 +174,33 @@ router.post("/signin", async (req, res) => {
   const { email, password } = req.body;
 
   const user = await User.findOne({ email });
-
   if (user) {
     if (user.status === "active") {
       bcrypt.compare(password, user.password).then((result) => {
         if (result) {
-          res.json({ user, message: "Tentative de connexion." });
+          const payload = {
+            id: user._id,
+            email: user.email,
+            username: user.username,
+          };
+
+          jwt.sign(
+            payload,
+            process.env.JWT_SECRET,
+            { expiresIn: process.env.JWT_EXPIRES_IN },
+            (err, token) => {
+              if (err) {
+                res.json({
+                  message: "Un probleme est survenue, réessayer plus tard.",
+                });
+              }
+              res.json({
+                user: payload,
+                token: `Bearer ${token}`,
+                message: "Tentative de connexion.",
+              });
+            }
+          );
         } else {
           res.status(400).json({
             message: "Adresse email ou mot de passe incorrect.",
