@@ -170,7 +170,32 @@ router.post("/password", async (req, res) => {
 // @access Public
 router.post("/signin", async (req, res) => {
   const { email, password } = req.body;
-  res.json({ message: "Tentative de connexion." });
+
+  const user = await User.findOne({ email });
+
+  if (user) {
+    if (user.status === "active") {
+      bcrypt.compare(password, user.password).then((result) => {
+        if (result) {
+          res.json({ user, message: "Tentative de connexion." });
+        } else {
+          res.status(400).json({
+            message: "Adresse email ou mot de passe incorrect.",
+          });
+        }
+      });
+    }
+    if (user.status === "pending") {
+      res.status(400).json({
+        message:
+          "Vous devez valider votre adresse email avant de vous connecter 🙄",
+      });
+    }
+  } else {
+    res.status(400).json({
+      message: "Adresse email ou mot de passe incorrect.",
+    });
+  }
 });
 
 module.exports = router;
