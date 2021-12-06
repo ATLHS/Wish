@@ -5,7 +5,7 @@ import Home from "./views/Home/Home";
 import Signup from "./views/Signup/Signup";
 import SignIn from "./views/SignIn/SignIn";
 import Navigation from "./components/Navigation/Navigation";
-import { AuthContext } from "./Context/AuthContext";
+import { AuthContext } from "./context/AuthContext";
 
 function App() {
   const useAuth = () => {
