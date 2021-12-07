@@ -1,12 +1,9 @@
-// import { useContext } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-// import { AuthContext } from "../../context/AuthContext";
 import "./Dashboard.css";
 
-export const Dashboard = () => {
-  //   const { isLoggedIn } = useContext(AuthContext);
+const Dashboard = () => {
   return (
     <Container
       className="bg-primary"

@@ -32,7 +32,7 @@ const SignIn = () => {
         .then((r) => {
           setIsLoading(false);
           signin(r.user, r.token);
-          navigate("./dashboard", { replace: true });
+          navigate("/dashboard", { replace: true });
         })
         .catch((err) => {
           setMessage(err.message);

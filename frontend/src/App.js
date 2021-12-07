@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./views/Home/Home";
 import Signup from "./views/Signup/Signup";
@@ -9,14 +9,9 @@ import { AuthContext } from "./context/AuthContext";
 import Dashboard from "./views/Dashboard/Dashboard";
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    const user = localStorage.getItem("user");
-    if (user) {
-      setIsLoggedIn(true);
-    }
-  }, []);
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    localStorage.getItem("user") ? true : false
+  );
 
   const useAuth = () => {
     return {
@@ -39,6 +34,7 @@ function App() {
       logout: () => {
         localStorage.removeItem("user");
         localStorage.removeItem("token");
+        setIsLoggedIn(false);
       },
     };
   };
@@ -60,8 +56,8 @@ function App() {
               </RequireAuth>
             }
           />
-
           <Route path="/" element={<Home />} />
+          <Route path="*" element={<SignIn />} />
         </Routes>
       </AuthContext.Provider>
     </BrowserRouter>

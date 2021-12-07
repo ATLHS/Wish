@@ -1,12 +1,9 @@
-import { useContext } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { AuthContext } from "../../context/AuthContext";
-// import './Home.css';
+import "./Home.css";
 
-export const Home = () => {
-  const { isLoggedIn } = useContext(AuthContext);
+const Home = () => {
   return (
     <Container
       className="bg-primary"
@@ -14,7 +11,7 @@ export const Home = () => {
       fluid
     >
       <Row className="h-100 d-flex justify-content-center">
-        <Col xs={3}></Col>
+        <Col xs={3}>Home</Col>
       </Row>
     </Container>
   );
