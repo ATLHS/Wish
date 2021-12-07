@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import authService from "../../services/auth";
 import Button from "react-bootstrap/Button";
@@ -9,9 +10,11 @@ import signInJsonSchemaForm from "../../schemas/signInJsonSchemaForm";
 import React, { useState } from "react";
 import Row from "react-bootstrap/Row";
 import Spinner from "react-bootstrap/Spinner";
+import { AuthContext } from "../../context/AuthContext";
 import "./SignIn.css";
 
 const SignIn = () => {
+  const { signin } = useContext(AuthContext);
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -25,8 +28,8 @@ const SignIn = () => {
         .handleSignIn(email, password)
         .then((res) => res)
         .then((r) => {
-          setMessage(r.message);
           setIsLoading(false);
+          signin(r.user, r.token);
         })
         .catch((err) => {
           setMessage(err.message);

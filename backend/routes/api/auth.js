@@ -145,7 +145,7 @@ router.post("/password", async (req, res) => {
             isUpdate: true,
           });
         } else {
-          res.json({
+          res.status(400).json({
             user: { username: user.username, email: useer.email },
             message: "Un probleme est survenue, réessayer plus tard.",
             isUpdate: false,
@@ -153,14 +153,14 @@ router.post("/password", async (req, res) => {
         }
       });
     } else {
-      res.json({
+      res.status(400).json({
         user: { username: user.username, email: useer.email },
         message: "Un probleme est survenue, réessayer plus tard.",
         isUpdate: false,
       });
     }
   } else {
-    res.json({
+    res.status(400).json({
       user: { username: "", email: "" },
       message: "Un probleme est survenue, réessayer plus tard.",
     });
@@ -194,10 +194,11 @@ router.post("/signin", async (req, res) => {
                   message: "Un probleme est survenue, réessayer plus tard.",
                 });
               }
-              res.json({
+              res.status(200).json({
                 user: payload,
                 token: `Bearer ${token}`,
                 message: "Tentative de connexion.",
+                success: true,
               });
             }
           );
