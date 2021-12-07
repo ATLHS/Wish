@@ -11,10 +11,11 @@ import React, { useState } from "react";
 import Row from "react-bootstrap/Row";
 import Spinner from "react-bootstrap/Spinner";
 import { AuthContext } from "../../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./SignIn.css";
 
 const SignIn = () => {
+  const { state } = useLocation();
   const { signin } = useContext(AuthContext);
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -32,7 +33,7 @@ const SignIn = () => {
         .then((r) => {
           setIsLoading(false);
           signin(r.user, r.token);
-          navigate("/dashboard", { replace: true });
+          navigate(state.prevPath || "/dashboard", { replace: true });
         })
         .catch((err) => {
           setMessage(err.message);
