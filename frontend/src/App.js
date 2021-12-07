@@ -4,7 +4,9 @@ import Home from "./views/Home/Home";
 import Signup from "./views/Signup/Signup";
 import SignIn from "./views/SignIn/SignIn";
 import Navigation from "./components/Navigation/Navigation";
+import RequireAuth from "./components/RequireAuth/RequireAuth";
 import { AuthContext } from "./context/AuthContext";
+import Dashboard from "./views/Dashboard/Dashboard";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -50,6 +52,15 @@ function App() {
         <Routes>
           <Route path="/signup" element={<Signup />} />
           <Route path="/signin" element={<SignIn />} />
+          <Route
+            path="/dashboard"
+            element={
+              <RequireAuth>
+                <Dashboard />
+              </RequireAuth>
+            }
+          />
+
           <Route path="/" element={<Home />} />
         </Routes>
       </AuthContext.Provider>

@@ -14,9 +14,7 @@ export const Home = () => {
       fluid
     >
       <Row className="h-100 d-flex justify-content-center">
-        <Col xs={3}>
-          {isLoggedIn ? <div>Dashboard page</div> : <div>Login page</div>}
-        </Col>
+        <Col xs={3}></Col>
       </Row>
     </Container>
   );

@@ -11,12 +11,14 @@ import React, { useState } from "react";
 import Row from "react-bootstrap/Row";
 import Spinner from "react-bootstrap/Spinner";
 import { AuthContext } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 import "./SignIn.css";
 
 const SignIn = () => {
   const { signin } = useContext(AuthContext);
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  let navigate = useNavigate();
 
   const { handleSubmit, control } = useForm();
   const onSubmit = (data, e) => {
@@ -30,6 +32,7 @@ const SignIn = () => {
         .then((r) => {
           setIsLoading(false);
           signin(r.user, r.token);
+          navigate("./dashboard", { replace: true });
         })
         .catch((err) => {
           setMessage(err.message);
