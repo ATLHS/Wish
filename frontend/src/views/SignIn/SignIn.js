@@ -22,7 +22,7 @@ const SignIn = () => {
   let navigate = useNavigate();
 
   const { handleSubmit, control } = useForm();
-  const onSubmit = (data, e) => {
+  const onSubmit = (data) => {
     const { email, password } = data;
 
     if (email && password) {
@@ -32,10 +32,12 @@ const SignIn = () => {
         .then((res) => res)
         .then((r) => {
           setIsLoading(false);
+          setMessage(r.message);
           signin(r.user, r.token);
           navigate(state.prevPath || "/dashboard", { replace: true });
         })
         .catch((err) => {
+          setIsLoading(false);
           setMessage(err.message);
         });
     }
