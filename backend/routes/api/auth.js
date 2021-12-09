@@ -14,7 +14,6 @@ const authorizedEmails = process.env.MEMBERS_EMAILS_ADDRESSES.split(",");
 router.post("/signup", async (req, res) => {
   const email = req.body.email;
   const username = req.body.username;
-
   if (authorizedEmails.includes(email)) {
     const user = await User.findOne({ email });
     if (user) {
@@ -70,7 +69,7 @@ router.post("/signup", async (req, res) => {
           .then((response) => response)
           .catch((err) => console.log(err));
         if (isSend && isSend.accepted) {
-          res.json({
+          res.status(200).json({
             user: { username: username, email },
             message: `Indiquez le code de confirmation envoyer a l'adresse email : ${newUser.email}.`,
           });

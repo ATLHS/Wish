@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import authService from "../../services/auth";
 import Button from "react-bootstrap/Button";
@@ -8,10 +9,14 @@ import FormGroup from "../../components/FormGroup/FormGroup";
 import React, { useState, useEffect } from "react";
 import Row from "react-bootstrap/Row";
 import Spinner from "react-bootstrap/Spinner";
+import { AuthContext } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 import signupJsonSchemaForm from "../../schemas/signupJsonSchemaForm";
 import "./Signup.css";
 
 export const Signup = () => {
+  const { signin } = useContext(AuthContext);
+  let navigate = useNavigate();
   const [user, setUser] = useState({
     username: "",
     email: "",
@@ -49,15 +54,18 @@ export const Signup = () => {
         .handleEmail(email, username)
         .then((res) => res)
         .then((r) => {
+          setIsLoading(false);
           setUser({
             ...user,
             username: r.user.username,
             email: r.user.email,
           });
           setMessage(r.message);
-          setIsLoading(false);
         })
-        .catch((err) => setMessage(err.message));
+        .catch((err) => {
+          setIsLoading(false);
+          setMessage(err.message);
+        });
     }
 
     if (confirmCode && !password) {
@@ -66,14 +74,17 @@ export const Signup = () => {
         .handleConfirmCode(email, confirmCode)
         .then((res) => res)
         .then((r) => {
+          setIsLoading(false);
           setMessage(r.message);
           setUser({
             ...user,
             isConfirmCode: r.isValidCode,
           });
-          setIsLoading(false);
         })
-        .catch((err) => setMessage(err.message));
+        .catch((err) => {
+          setIsLoading(false);
+          setMessage(err.message);
+        });
     }
 
     if (password) {
@@ -82,11 +93,15 @@ export const Signup = () => {
         .handleUserPaswword(email, password)
         .then((res) => res)
         .then((r) => {
-          // TO DO : route the new user to the dashboard after success signup
-          setMessage(r.message);
           setIsLoading(false);
+          setMessage(r.message);
+          signin(r.user, r.token);
+          navigate("/dashboard", { replace: true });
         })
-        .catch((err) => setMessage(err.message));
+        .catch((err) => {
+          setIsLoading(false);
+          setMessage(err.message);
+        });
     }
   };
 
