@@ -60,7 +60,7 @@ const SignIn = () => {
             <div className="signin-form-headline">
               {!isLoading ? (
                 !message ? (
-                  "Indiquez votre e-mail et votre mot de pass pour commencer"
+                  "Bienvenue sur Wish"
                 ) : (
                   message
                 )

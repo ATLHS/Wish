@@ -124,7 +124,7 @@ export const Signup = () => {
             <div className="signup-form-headline">
               {!isLoading ? (
                 !message ? (
-                  "Indiquez votre e-mail pour commencer"
+                  "Bienvenue sur Wish"
                 ) : (
                   message
                 )

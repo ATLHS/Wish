@@ -45,7 +45,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      {/* <Navigation /> */}
+      <Navigation />
       <AuthContext.Provider value={auth}>
         <Routes>
           <Route
