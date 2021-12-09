@@ -138,11 +138,29 @@ router.post("/password", async (req, res) => {
         );
 
         if (!err && isUpdate) {
-          res.status(200).json({
-            user: { username: user.username, email: user.email },
-            message: `Bienvenue sur Wish ${user.username}.`,
-            isUpdate: true,
-          });
+          const payload = {
+            id: user._id,
+            email: user.email,
+            username: user.username,
+          };
+
+          jwt.sign(
+            payload,
+            process.env.JWT_SECRET,
+            { expiresIn: process.env.JWT_EXPIRES_IN },
+            (err, token) => {
+              if (err) {
+                res.json({
+                  message: "Un probleme est survenue, réessayer plus tard.",
+                });
+              }
+              res.status(200).json({
+                user: payload,
+                token: `Bearer ${token}`,
+                message: `Bienvenue sur Wish ${user.username}.`,
+              });
+            }
+          );
         } else {
           res.status(400).json({
             user: { username: user.username, email: useer.email },
