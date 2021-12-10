@@ -18,7 +18,7 @@
       "label": "Password",
       "name": "password",
       "description": "User password",
-      "type": "text",
+      "type": "password",
       "default": "",
       "placeholder": "Mot de passe",
       "validation": {

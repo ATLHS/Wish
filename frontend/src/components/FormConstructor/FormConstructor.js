@@ -6,6 +6,8 @@ const FormConstructor = ({ events, field }) => {
   switch (field.type) {
     case "text":
       return <InputField {...events} {...field} />;
+    case "password":
+      return <InputField {...events} {...field} />;
     case "textarea":
       return <TextareaField {...events} {...field} />;
     case "email":

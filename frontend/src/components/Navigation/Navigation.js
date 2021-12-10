@@ -1,12 +1,17 @@
-import React, { useState } from "react";
+import { useState, useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
 import { Link } from "react-router-dom";
 import Navbar from "react-bootstrap/Navbar";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Offcanvas from "react-bootstrap/Offcanvas";
+import { useNavigate } from "react-router-dom";
 
 const Navigation = () => {
+  const { isLoggedIn, logout } = useContext(AuthContext);
   const [expanded, setExpanded] = useState(false);
+  let navigate = useNavigate();
+
   return (
     <Navbar
       bg="light"
@@ -33,17 +38,25 @@ const Navigation = () => {
             <Nav className="me-auto">
               <Link
                 className="nav-link"
-                to="/signin"
+                to={!isLoggedIn ? "/signup" : "/profil"}
                 onClick={() => setExpanded(false)}
               >
-                Connexion
+                {!isLoggedIn ? "Inscription" : "Profil"}
               </Link>
               <Link
                 className="nav-link"
-                to="/signup"
-                onClick={() => setExpanded(false)}
+                to="/signin"
+                onClick={
+                  !isLoggedIn
+                    ? () => setExpanded(false)
+                    : () => {
+                        logout();
+                        navigate("/signin", { replace: true });
+                        setExpanded(false);
+                      }
+                }
               >
-                Inscription
+                {!isLoggedIn ? "Connexion" : "Déconnexion"}
               </Link>
             </Nav>
           </Offcanvas.Body>

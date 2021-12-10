@@ -45,8 +45,8 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Navigation />
       <AuthContext.Provider value={auth}>
+        <Navigation />
         <Routes>
           <Route
             path="/signup"
