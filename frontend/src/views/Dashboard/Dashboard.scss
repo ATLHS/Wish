@@ -1,0 +1,10 @@
+.dashboard {
+  &__container {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    &__col {
+      height: 100%;
+    }
+  }
+}

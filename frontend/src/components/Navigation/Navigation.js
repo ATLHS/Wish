@@ -36,6 +36,15 @@ const Navigation = () => {
 
           <Offcanvas.Body>
             <Nav className="me-auto">
+              {isLoggedIn && (
+                <Link
+                  className="nav-link"
+                  to="/dashboard"
+                  onClick={() => setExpanded(false)}
+                >
+                  Dashboard
+                </Link>
+              )}
               <Link
                 className="nav-link"
                 to={!isLoggedIn ? "/signup" : "/profil"}
@@ -43,6 +52,7 @@ const Navigation = () => {
               >
                 {!isLoggedIn ? "Inscription" : "Profil"}
               </Link>
+
               <Link
                 className="nav-link"
                 to="/signin"
