@@ -1,0 +1,40 @@
+{
+  "title": "Gift form",
+  "description": "User gift fields",
+  "type": "object",
+  "fields": {
+    "name": {
+      "label": "Nom du cadeaux",
+      "name": "name",
+      "description": "Gift name",
+      "type": "text",
+      "default": "",
+      "placeholder": "Nom",
+      "validation": {
+        "required": "Indiquez le nom du cadeaux"
+      }
+    },
+    "description": {
+      "label": "Description",
+      "name": "description",
+      "description": "Gift description",
+      "type": "textarea",
+      "default": "",
+      "placeholder": "Description",
+      "validation": {
+        "required": "Indiquez une descritpion"
+      }
+    },
+    "lien": {
+      "label": "Lien",
+      "name": "link_url",
+      "description": "Gift link url",
+      "type": "text",
+      "default": "",
+      "placeholder": "Lien",
+      "validation": {
+        "required": "Indiquez un lien direct vers le cadeaux"
+      }
+    }
+  }
+}
