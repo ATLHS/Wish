@@ -1,6 +1,7 @@
 import React from "react";
 import InputField from "../FormElement/InputField/InputField";
 import TextareaField from "../FormElement/TextareaField/TextareaField";
+import FileField from "../FormElement/FileField/FileField";
 
 const FormConstructor = ({ events, field }) => {
   switch (field.type) {
@@ -12,6 +13,8 @@ const FormConstructor = ({ events, field }) => {
       return <TextareaField {...events} {...field} />;
     case "email":
       return <InputField {...events} {...field} />;
+    case "file":
+      return <FileField {...events} {...field} />;
     default:
       return;
   }
