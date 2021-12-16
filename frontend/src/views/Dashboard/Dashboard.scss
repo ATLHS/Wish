@@ -3,8 +3,80 @@
     height: 100%;
     display: flex;
     justify-content: center;
-    &__col {
-      height: 100%;
+    &__section {
+      flex-direction: column;
+      padding-top: 100px;
+      &__tabs {
+        display: flex;
+        justify-content: center;
+        li {
+          button {
+            color: black;
+            font-weight: bold;
+            &:hover {
+              color: inherit;
+            }
+          }
+        }
+        &__tab {
+          &__avatars {
+            &__avatar {
+              display: flex;
+              justify-content: center;
+              flex-direction: column;
+              p {
+                text-align: center;
+              }
+              &__image {
+                padding: 5px;
+                height: 100%;
+                width: 100%;
+                &:hover {
+                  cursor: pointer;
+                }
+              }
+            }
+          }
+          &__list {
+            padding-top: 50px;
+            &__container {
+              &__filter-section {
+                &__title {
+                  &__description {
+                    font-size: 20px;
+                  }
+                }
+                &__filter {
+                  &__dropdown {
+                    &__toggle {
+                    }
+                    &__menu {
+                      &__item {
+                      }
+                    }
+                  }
+                }
+              }
+              &__group {
+                &__items {
+                  &__item {
+                    margin-bottom: 15px;
+                    border-radius: 5px;
+                  }
+                }
+              }
+            }
+          }
+          &__wishlist {
+            &__container {
+              &__title {
+                text-align: center;
+                font-size: 20px;
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
