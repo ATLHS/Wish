@@ -1,0 +1,23 @@
+.file-field {
+  margin: 10px !important;
+  &__image {
+    height: 200px;
+    padding: 10px !important;
+    background-color: #f3f3f3;
+    border-radius: 0.25rem;
+    &:hover {
+      cursor: pointer;
+    }
+    &__placeholder {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      &.b-dashed {
+        border: dashed 2px #9b9b9b9e;
+      }
+    }
+  }
+  &__group {
+    display: none;
+  }
+}
