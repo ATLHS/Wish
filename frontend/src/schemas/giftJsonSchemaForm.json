@@ -21,9 +21,7 @@
       "type": "textarea",
       "default": "",
       "placeholder": "Description",
-      "validation": {
-        "required": "Indiquez une descritpion"
-      }
+      "validation": {}
     },
     "lien": {
       "label": "Lien",
@@ -32,9 +30,16 @@
       "type": "text",
       "default": "",
       "placeholder": "Lien",
-      "validation": {
-        "required": "Indiquez un lien direct vers le cadeaux"
-      }
+      "validation": {}
+    },
+    "image": {
+      "label": "Image",
+      "name": "image",
+      "description": "Gift image",
+      "type": "file",
+      "default": "",
+      "placeholder": "http://terre-paille.fr/wp-content/plugins/photonic/include/images/placeholder.png",
+      "validation": {}
     }
   }
 }
