@@ -23,7 +23,9 @@ app.use(cors());
 app.use(express.static("public"));
 
 const authRouter = require("./routes/api/auth");
+const giftRouter = require("./routes/api/gift");
 
 app.use("/api/auth", authRouter);
+app.use("/api/gift", giftRouter);
 
 app.listen(port, () => console.log(`Wish listening on port ${port}`));
