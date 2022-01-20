@@ -8,7 +8,7 @@ import Image from "react-bootstrap/Image";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
 import "./Dashboard.scss";
-import Fade from "react-reveal/Slide";
+// import Fade from "react-reveal/Slide";
 import FormGroup from "../../components/FormGroup/FormGroup";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -78,20 +78,20 @@ const Dashboard = () => {
   const onSubmit = (data) => {
     // if (email && username && !confirmCode) {
     // setIsLoading(true);
-
-    giftService
-      .createGift(data)
-      .then((res) => res)
-      .then((r) => {
-        // setIsLoading(false);
-        console.log(r);
-        // setMessage(r.message);
-      })
-      .catch((err) => {
-        // setIsLoading(false);
-        // setMessage(err.message);
-        console.log(err);
-      });
+    console.log(data, "data");
+    // giftService
+    //   .createGift(data)
+    //   .then((res) => res)
+    //   .then((r) => {
+    //     // setIsLoading(false);
+    //     console.log(r);
+    //     // setMessage(r.message);
+    //   })
+    //   .catch((err) => {
+    //     // setIsLoading(false);
+    //     // setMessage(err.message);
+    //     console.log(err);
+    //   });
     // }
   };
 
@@ -199,26 +199,26 @@ const Dashboard = () => {
                       </Dropdown>
                     </Col>
                   </Row>
-                  <Fade
+                  {/* <Fade
                     className="dashboard__container__section__tabs__tab__list__container__group"
                     bottom
                     cascade
                     spy={gifts}
-                  >
-                    <div className="dashboard__container__section__tabs__tab__list__container__group__items">
-                      {gifts.map((gift, i) => (
-                        <ListGroup.Item
-                          key={i}
-                          className="dashboard__container__section__tabs__tab__list__container__group__items__item"
-                          action
-                          variant={gift.available ? "success" : "dark"}
-                          onClick={() => goToProductView()}
-                        >
-                          Gift title
-                        </ListGroup.Item>
-                      ))}
-                    </div>
-                  </Fade>
+                  > */}
+                  <div className="dashboard__container__section__tabs__tab__list__container__group__items">
+                    {gifts.map((gift, i) => (
+                      <ListGroup.Item
+                        key={i}
+                        className="dashboard__container__section__tabs__tab__list__container__group__items__item"
+                        action
+                        variant={gift.available ? "success" : "dark"}
+                        onClick={() => goToProductView()}
+                      >
+                        Gift title
+                      </ListGroup.Item>
+                    ))}
+                  </div>
+                  {/* </Fade> */}
                 </Col>
               </Row>
             </Tab>

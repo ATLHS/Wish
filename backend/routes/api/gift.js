@@ -8,8 +8,10 @@ const upload = multer({ dest: "uploads/" });
 // @description save new user
 // @access Private
 router.post("/create", upload.single("image"), (req, res) => {
-  console.log(req.file);
-  console.log(req.body.name);
+  const file = req.file;
+  uploadFile(file).then((res) => {
+    console.log(res);
+  });
   res.status(200).json({
     message: "L'image à bien était uploader.",
   });
